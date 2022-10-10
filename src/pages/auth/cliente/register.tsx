@@ -1,8 +1,9 @@
 import { Box } from '@mui/system';
+import type { NextPage } from 'next';
 import client from '../../../../public/client-register.svg';
 import { FormContent, ImageContent } from '../../../components/Auth/';
 
-const ClientRegisterPage = () => {
+const ClientRegisterPage: NextPage = () => {
   return (
     <Box
       sx={{

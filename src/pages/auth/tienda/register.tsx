@@ -1,8 +1,9 @@
 import { FormContent, ImageContent } from '@components/Auth/';
 import { Box } from '@mui/system';
 import shop from '@public/shop-register.svg';
+import type { NextPage } from 'next';
 
-const ShopRegisterPage = () => {
+const ShopRegisterPage: NextPage = () => {
   return (
     <Box
       sx={{

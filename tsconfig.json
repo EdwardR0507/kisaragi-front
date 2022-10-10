@@ -3,7 +3,9 @@
     "baseUrl": "./",
     "paths": {
       "@components/*": ["./src/components/*"],
-      "@public/*": ["./public/*"]
+      "@layouts/*": ["./src/layouts/*"],
+      "@public/*": ["./public/*"],
+      "@themes/*": ["./src/themes/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
