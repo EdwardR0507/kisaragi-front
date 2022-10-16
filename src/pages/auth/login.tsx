@@ -1,9 +1,9 @@
-import { FormContent, ImageContent } from '@components/Auth/';
+import { FormLogin, ImageContent } from '@/components/auth/';
+import client from '@/public/client-login.svg';
 import { Box } from '@mui/system';
-import client from '@public/client-login.svg';
 import type { NextPage } from 'next';
 
-const ClientPage: NextPage = () => {
+const LoginPage: NextPage = () => {
   return (
     <Box
       sx={{
@@ -14,10 +14,10 @@ const ClientPage: NextPage = () => {
         height: '100vh',
       }}
     >
-      <FormContent mode="cliente" page="login" />
+      <FormLogin />
       <ImageContent image={client} />
     </Box>
   );
 };
 
-export default ClientPage;
+export default LoginPage;

@@ -1,3 +1,5 @@
+import Facebook from '@/public/facebook-icon.svg';
+import Google from '@/public/google-icon.svg';
 import {
   Box,
   Button,
@@ -6,17 +8,9 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import Facebook from '@public/facebook-icon.svg';
-import Google from '@public/google-icon.svg';
 import Image from 'next/image';
-import { FC } from 'react';
-import { LoginLinks } from './LoginLinks';
-import { RegisterLinks } from './RegisterLinks';
-
-interface FormContentProps {
-  mode: 'tienda' | 'cliente';
-  page: 'login' | 'register';
-}
+import NextLink from 'next/link';
+import { InputPassword } from '../InputPassword/index';
 
 const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -39,12 +33,7 @@ const StyledForm = styled('form')(({ theme }) => ({
   justifyContent: 'space-evenly',
   alignItems: 'center',
   gap: theme.spacing(3),
-  [theme.breakpoints.down('md')]: {
-    marginTop: theme.spacing(3),
-  },
-  [theme.breakpoints.down('sm')]: {
-    height: '230px',
-  },
+  marginTop: theme.spacing(3),
 }));
 
 const StyledInput = styled(TextField)(() => ({
@@ -61,7 +50,7 @@ const StyledButton = styled(Button)(() => ({
   borderRadius: '10px',
 }));
 
-export const FormContent: FC<FormContentProps> = ({ mode, page }) => {
+export const FormRegister = () => {
   return (
     <StyledBox>
       <Box
@@ -73,42 +62,43 @@ export const FormContent: FC<FormContentProps> = ({ mode, page }) => {
           marginTop: '50px',
         }}
       >
-        <Typography
-          variant="h6"
-          sx={{
-            marginTop: {
-              xs: '10px',
-            },
-          }}
-        >
-          {page === 'register' ? 'Regístrate como ' : 'Inicia sesión como '}
-          {mode} 🚀
+        <Typography variant="h6">La aventura comienza aquí 🚀</Typography>
+        <br />
+        <Typography variant="body1" align="center">
+          Realiza tus compras por internet de forma segura y rápida
         </Typography>
+
         <StyledForm>
-          {page === 'register' && (
-            <StyledInput label="Nombre de Usuario" variant="outlined" />
-          )}
+          <StyledInput label="Nombre de Usuario" variant="outlined" />
           <StyledInput label="Email" variant="outlined" type="email" />
-          <StyledInput label="Contraseña" variant="outlined" type="password" />
+          <InputPassword />
           <StyledButton variant="contained" color="primary" type="submit">
-            {page === 'register' ? 'Registrarse' : 'Iniciar sesión'}
+            Registrarse
           </StyledButton>
         </StyledForm>
-        <Box
+
+        <Typography
+          variant="body1"
+          align="center"
           sx={{
             width: '100%',
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-            gap: '20px',
+            marginTop: '5px',
           }}
         >
-          {page === 'register' ? (
-            <RegisterLinks mode={mode} />
-          ) : (
-            <LoginLinks mode={mode} />
-          )}
-        </Box>
+          ¿Ya tienes cuenta?{' '}
+          <span>
+            <NextLink href={`/auth/login`}>
+              <a
+                style={{
+                  color: '#666CFF',
+                }}
+              >
+                Inicia sesión
+              </a>
+            </NextLink>
+          </span>
+        </Typography>
+
         <Box
           sx={{
             width: '100%',

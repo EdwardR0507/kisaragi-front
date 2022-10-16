@@ -1,9 +1,9 @@
+import { FormRegister, ImageContent } from '@/components/auth';
+import client from '@/public/client-register.svg';
 import { Box } from '@mui/system';
 import type { NextPage } from 'next';
-import client from '../../../../public/client-register.svg';
-import { FormContent, ImageContent } from '../../../components/Auth/';
 
-const ClientRegisterPage: NextPage = () => {
+const RegisterPage: NextPage = () => {
   return (
     <Box
       sx={{
@@ -15,9 +15,9 @@ const ClientRegisterPage: NextPage = () => {
       }}
     >
       <ImageContent image={client} />
-      <FormContent mode="cliente" page="register" />
+      <FormRegister />
     </Box>
   );
 };
 
-export default ClientRegisterPage;
+export default RegisterPage;

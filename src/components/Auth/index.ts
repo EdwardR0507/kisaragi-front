@@ -1,2 +1,3 @@
-export * from './FormContent';
+export * from './FormLogin';
+export * from './FormRegister';
 export * from './ImageContent';
