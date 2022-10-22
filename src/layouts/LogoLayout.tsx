@@ -1,5 +1,5 @@
+import Logo from '@/public/logo.svg';
 import { Box, styled, Typography } from '@mui/material';
-import Logo from '@public/logo.svg';
 import Image from 'next/image';
 import { FC } from 'react';
 

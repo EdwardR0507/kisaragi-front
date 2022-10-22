@@ -3,6 +3,19 @@
   "globals": {
     "React": "readonly"
   },
+  "plugins": ["jest"],
+  "env": {
+    "jest/globals": true
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": ["plugin:testing-library/react"]
+    }
+  ],
   "rules": {
     "no-unused-vars": [1, { "args": "after-used", "argsIgnorePattern": "^_" }],
     "no-restricted-imports": [

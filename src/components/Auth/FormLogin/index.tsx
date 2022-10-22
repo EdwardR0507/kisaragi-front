@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import NextLink from 'next/link';
-import { InputPassword } from '../InputPassword/index';
+import { InputPassword } from '../InputPassword';
 
 const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
