@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "@components/*": ["./src/components/*"],
-      "@public/*": ["./public/*"]
-    },
+    "baseUrl": ".",
+    "paths": { "@/*": ["./src/*"], "@/public/*": ["./public/*"] },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -23,6 +20,6 @@
     "noImplicitThis": true,
     "strictNullChecks": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/ui/icons/*"],
   "exclude": ["node_modules"]
 }

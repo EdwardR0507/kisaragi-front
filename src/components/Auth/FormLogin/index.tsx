@@ -1,3 +1,5 @@
+import Facebook from '@/public/facebook-icon.svg';
+import Google from '@/public/google-icon.svg';
 import {
   Box,
   Button,
@@ -6,27 +8,21 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import Facebook from '@public/facebook-icon.svg';
-import Google from '@public/google-icon.svg';
 import Image from 'next/image';
-import { FC } from 'react';
-import { LoginLinks } from './LoginLinks';
-import { RegisterLinks } from './RegisterLinks';
-
-interface FormContentProps {
-  mode: 'tienda' | 'cliente';
-  page: 'login' | 'register';
-}
+import NextLink from 'next/link';
+import { InputPassword } from '../InputPassword';
 
 const StyledBox = styled(Box)(({ theme }) => ({
-  height: '100%',
+  backgroundColor: theme.palette.background.paper,
   display: 'flex',
-  flex: 2,
-  flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: theme.palette.background.paper,
+  height: '100%',
+  flex: 2,
   padding: '28px',
+  [theme.breakpoints.down('md')]: {
+    padding: '10%',
+  },
 }));
 
 const StyledForm = styled('form')(({ theme }) => ({
@@ -34,7 +30,7 @@ const StyledForm = styled('form')(({ theme }) => ({
   height: '330px',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
+  justifyContent: 'space-evenly',
   alignItems: 'center',
   gap: theme.spacing(3),
 }));
@@ -53,38 +49,57 @@ const StyledButton = styled(Button)(() => ({
   borderRadius: '10px',
 }));
 
-export const FormContent: FC<FormContentProps> = ({ mode, page }) => {
-  return (
-    <StyledBox>
-      {page === 'register' ? (
-        <Typography variant="h6">Regístrate como {mode} 🚀</Typography>
-      ) : (
-        <Typography variant="h6">Inicia sesión como {mode} 🚀</Typography>
-      )}
+export const FormLogin = () => (
+  <StyledBox>
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        marginTop: '50px',
+      }}
+    >
+      <Typography variant="h6" align="center">
+        Bienvenido a Kisaragi 👋🏻
+      </Typography>
+      <br />
+      <Typography variant="body1" align="center">
+        Inicie sesión en su cuenta y comience su aventura{' '}
+      </Typography>
       <StyledForm>
-        {page === 'register' && (
-          <StyledInput label="Nombre de Usuario" variant="outlined" />
-        )}
         <StyledInput label="Email" variant="outlined" type="email" />
-        <StyledInput label="Contraseña" variant="outlined" type="password" />
+        <InputPassword />
         <StyledButton variant="contained" color="primary" type="submit">
-          {page === 'register' ? 'Registrarse' : 'Iniciar sesión'}
+          Iniciar sesión
         </StyledButton>
       </StyledForm>
-      <Box
+
+      <Typography
+        variant="body1"
+        align="center"
         sx={{
           width: '100%',
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'center',
         }}
       >
-        {page === 'register' ? (
-          <RegisterLinks mode={mode} />
-        ) : (
-          <LoginLinks mode={mode} />
-        )}
-      </Box>
+        ¿No tiene cuenta?{' '}
+        <span
+          style={{
+            color: 'red',
+          }}
+        >
+          <NextLink href={`/auth/register`}>
+            <a
+              style={{
+                color: '#666CFF',
+              }}
+            >
+              Regístrese
+            </a>
+          </NextLink>
+        </span>
+      </Typography>
+
       <Box
         sx={{
           width: '100%',
@@ -93,9 +108,9 @@ export const FormContent: FC<FormContentProps> = ({ mode, page }) => {
           alignItems: 'center',
         }}
       >
-        <Divider sx={{ width: '30%', margin: '28px' }} />
+        <Divider sx={{ width: '35%', margin: '30px' }} />
         O
-        <Divider sx={{ width: '30%', margin: '28px' }} />
+        <Divider sx={{ width: '35%', margin: '30px' }} />
       </Box>
       <Box
         sx={{
@@ -109,6 +124,6 @@ export const FormContent: FC<FormContentProps> = ({ mode, page }) => {
         <Image src={Google} width={20} height={20} alt="Google" />
         <Image src={Facebook} width={20} height={20} alt="Facebook" />
       </Box>
-    </StyledBox>
-  );
-};
+    </Box>
+  </StyledBox>
+);
