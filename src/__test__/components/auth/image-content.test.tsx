@@ -1,0 +1,10 @@
+import { ImageContent } from '@/components/auth';
+import client from '@/public/client-login.svg';
+import { render } from '@testing-library/react';
+
+describe('ImageContent', () => {
+  it('should render successfully', () => {
+    const { baseElement } = render(<ImageContent image={client} />);
+    expect(baseElement).toBeTruthy();
+  });
+});
