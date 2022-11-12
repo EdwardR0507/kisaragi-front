@@ -1,4 +1,4 @@
-import { FormRegister } from '@/components/auth';
+import { FormRegister } from '@/components/auth/FormRegister';
 import { render } from '@testing-library/react';
 
 describe('FormLogin', () => {

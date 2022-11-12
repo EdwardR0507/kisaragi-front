@@ -1,4 +1,4 @@
-import { MainLayout } from '@/layouts/MainLayout';
+import { MainLayout } from '@/layouts';
 import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
