@@ -1,10 +1,10 @@
-import { VisibilittyOff } from '@/ui/Icons';
+import { Cart } from '@/ui/Icons';
 import { render } from '@testing-library/react';
 
-describe('VisibilittyOff', () => {
+describe('Cart', () => {
   it('should render successfully', () => {
     const fill = '#EAEAFFDE';
-    const { baseElement } = render(<VisibilittyOff fill={fill} />);
+    const { baseElement } = render(<Cart fill={fill} />);
     expect(baseElement).toBeTruthy();
   });
 });

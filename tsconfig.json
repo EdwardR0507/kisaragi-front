@@ -20,6 +20,6 @@
     "noImplicitThis": true,
     "strictNullChecks": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/ui/icons/*"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/ui/Icons/*"],
   "exclude": ["node_modules"]
 }

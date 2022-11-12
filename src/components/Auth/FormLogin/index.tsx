@@ -1,5 +1,9 @@
 import Facebook from '@/public/facebook-icon.svg';
 import Google from '@/public/google-icon.svg';
+import { loginService } from '@/services/auth';
+import { ILogin } from '@/views/auth/interfaces/';
+import { LoginSchema } from '@/views/auth/validators';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
   Button,
@@ -10,14 +14,15 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import NextLink from 'next/link';
-import { InputPassword } from '../InputPassword';
+import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
 
 const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  height: '100%',
+  minHeight: '100vh',
   flex: 2,
   padding: '28px',
   [theme.breakpoints.down('md')]: {
@@ -49,81 +54,123 @@ const StyledButton = styled(Button)(() => ({
   borderRadius: '10px',
 }));
 
-export const FormLogin = () => (
-  <StyledBox>
-    <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      sx={{
-        marginTop: '50px',
-      }}
-    >
-      <Typography variant="h6" align="center">
-        Bienvenido a Kisaragi 👋🏻
-      </Typography>
-      <br />
-      <Typography variant="body1" align="center">
-        Inicie sesión en su cuenta y comience su aventura{' '}
-      </Typography>
-      <StyledForm>
-        <StyledInput label="Email" variant="outlined" type="email" />
-        <InputPassword />
-        <StyledButton variant="contained" color="primary" type="submit">
-          Iniciar sesión
-        </StyledButton>
-      </StyledForm>
+export const FormLogin = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid, isDirty },
+  } = useForm<ILogin>({
+    mode: 'onChange',
+    resolver: yupResolver(LoginSchema),
+  });
 
-      <Typography
-        variant="body1"
-        align="center"
+  const onSubmit = async (form: ILogin) => {
+    const data = await loginService(form);
+    if (data?.name == 'AxiosError') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: data?.response?.data?.detail,
+      });
+      return;
+    }
+    Swal.fire({
+      icon: 'success',
+      title: 'Bienvenido',
+      text: 'Iniciaste sesión correctamente',
+    });
+  };
+
+  return (
+    <StyledBox>
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
         sx={{
-          width: '100%',
+          marginTop: '50px',
         }}
       >
-        ¿No tiene cuenta?{' '}
-        <span
-          style={{
-            color: 'red',
+        <Typography variant="h6" align="center">
+          Bienvenido a Kisaragi 👋🏻
+        </Typography>
+        <br />
+        <Typography variant="body1" align="center">
+          Inicie sesión en su cuenta y comience su aventura{' '}
+        </Typography>
+        <StyledForm onSubmit={handleSubmit(onSubmit)}>
+          <StyledInput
+            label="Email"
+            variant="outlined"
+            type="email"
+            {...register('email')}
+          />
+          <StyledInput
+            label="Contraseña"
+            variant="outlined"
+            type="password"
+            {...register('password')}
+          />
+          <StyledButton
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={!isDirty || !isValid}
+          >
+            Iniciar sesión
+          </StyledButton>
+        </StyledForm>
+        <Typography
+          variant="body1"
+          align="center"
+          sx={{
+            width: '100%',
           }}
         >
-          <NextLink href={`/auth/register`}>
-            <a
-              style={{
-                color: '#666CFF',
-              }}
-            >
-              Regístrese
-            </a>
-          </NextLink>
-        </span>
-      </Typography>
+          ¿No tiene cuenta?{' '}
+          <span
+            style={{
+              color: 'red',
+            }}
+          >
+            <NextLink href={`/auth/register`}>
+              <a
+                style={{
+                  color: '#666CFF',
+                }}
+              >
+                Regístrese
+              </a>
+            </NextLink>
+          </span>
+        </Typography>
 
-      <Box
-        sx={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Divider sx={{ width: '35%', margin: '30px' }} />
-        O
-        <Divider sx={{ width: '35%', margin: '30px' }} />
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Divider sx={{ width: '35%', margin: '30px' }} />
+          O
+          <Divider sx={{ width: '35%', margin: '30px' }} />
+        </Box>
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '28px',
+          }}
+        >
+          <Image src={Google} width={20} height={20} alt="Google" />
+          <Image src={Facebook} width={20} height={20} alt="Facebook" />
+        </Box>
       </Box>
-      <Box
-        sx={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '28px',
-        }}
-      >
-        <Image src={Google} width={20} height={20} alt="Google" />
-        <Image src={Facebook} width={20} height={20} alt="Facebook" />
-      </Box>
-    </Box>
-  </StyledBox>
-);
+    </StyledBox>
+  );
+};
