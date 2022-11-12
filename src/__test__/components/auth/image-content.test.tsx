@@ -1,4 +1,4 @@
-import { ImageContent } from '@/components/auth';
+import { ImageContent } from '@/components/Auth';
 import client from '@/public/client-login.svg';
 import { render } from '@testing-library/react';
 

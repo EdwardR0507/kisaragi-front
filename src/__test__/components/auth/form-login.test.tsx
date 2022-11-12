@@ -1,4 +1,4 @@
-import { FormLogin } from '@/components/auth/FormLogin';
+import { FormLogin } from '@/components/Auth/FormLogin';
 import { render } from '@testing-library/react';
 
 describe('FormLogin', () => {
