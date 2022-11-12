@@ -1,4 +1,4 @@
-import { Visibilitty, VisibilittyOff } from '@/ui/icons';
+import { Visibilitty, VisibilittyOff } from '@/ui/Icons';
 import {
   FormControl,
   IconButton,

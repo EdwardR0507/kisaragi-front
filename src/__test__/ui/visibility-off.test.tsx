@@ -1,4 +1,4 @@
-import { VisibilittyOff } from '@/ui/icons';
+import { VisibilittyOff } from '@/ui/Icons';
 import { render } from '@testing-library/react';
 
 describe('VisibilittyOff', () => {
