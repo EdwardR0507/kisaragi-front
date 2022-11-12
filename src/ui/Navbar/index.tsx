@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import NextLink from 'next/link';
 
-import { Cart } from '../Icons';
+import { Cart } from '../icons/';
 import { Logo } from '../Logo/index';
 
 export const Navbar = () => {
