@@ -1,4 +1,4 @@
-import { FormRegister, ImageContent } from '@/components/auth';
+import { FormRegister, ImageContent } from '@/components/Auth';
 import { AuthLayout } from '@/layouts/AuthLayout';
 import client from '@/public/client-register.svg';
 import { Logo } from '@/ui/Logo';
