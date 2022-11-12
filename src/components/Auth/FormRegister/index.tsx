@@ -16,7 +16,9 @@ import {
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import { Controller, useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
 
 const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -56,6 +58,7 @@ const StyledButton = styled(Button)(() => ({
 }));
 
 export const FormRegister = () => {
+  const router = useRouter();
   const {
     control,
     register,
@@ -73,7 +76,21 @@ export const FormRegister = () => {
       role: 'USER',
     };
     const data = await registerService(dataToSend);
-    console.log(data);
+    if (data?.name == 'AxiosError') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: data?.response?.data?.detail,
+      });
+      return;
+    }
+    Swal.fire({
+      icon: 'success',
+      title: 'Bienvenido',
+      text: 'Registrado correctamente',
+      timer: 2000,
+    });
+    router.push('/auth/login');
   };
 
   return (
@@ -95,7 +112,7 @@ export const FormRegister = () => {
 
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
           <StyledInput
-            label="Nombre"
+            label="Nombre de usuario"
             variant="outlined"
             {...register('user_name')}
           />
