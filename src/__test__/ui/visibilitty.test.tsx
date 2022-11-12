@@ -1,4 +1,4 @@
-import { Visibilitty } from '@/ui/Icons';
+import { Visibilitty } from '@/ui/icons';
 import { render } from '@testing-library/react';
 
 describe('Visibilitty', () => {
