@@ -39,7 +39,7 @@ const StyledForm = styled('form')(({ theme }) => ({
   flexDirection: 'column',
   justifyContent: 'space-evenly',
   alignItems: 'center',
-  gap: theme.spacing(3),
+  gap: theme.spacing(6),
   marginTop: theme.spacing(3),
 }));
 
@@ -63,7 +63,7 @@ export const FormRegister = () => {
     control,
     register,
     handleSubmit,
-    formState: { isValid, isDirty },
+    formState: { isValid, isDirty, errors },
   } = useForm<IRegister>({
     mode: 'onChange',
     resolver: yupResolver(RegisterSchema),
@@ -114,23 +114,31 @@ export const FormRegister = () => {
           <StyledInput
             label="Nombre de usuario"
             variant="outlined"
+            error={!!errors.user_name}
+            helperText={errors.user_name?.message}
             {...register('user_name')}
           />
           <StyledInput
             label="Email"
             variant="outlined"
             type="email"
+            error={!!errors.email}
+            helperText={errors.email?.message}
             {...register('email')}
           />
           <StyledInput
             label="Contraseña"
             variant="outlined"
             type="password"
+            error={!!errors.password}
+            helperText={errors.password?.message}
             {...register('password')}
           />
           <StyledInput
             label="Teléfono"
             variant="outlined"
+            error={!!errors.telephone_number}
+            helperText={errors.telephone_number?.message}
             {...register('telephone_number')}
           />
           <Controller

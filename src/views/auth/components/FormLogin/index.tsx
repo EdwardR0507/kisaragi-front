@@ -58,7 +58,7 @@ export const FormLogin = () => {
   const {
     register,
     handleSubmit,
-    formState: { isValid, isDirty },
+    formState: { isValid, isDirty, errors },
   } = useForm<ILogin>({
     mode: 'onChange',
     resolver: yupResolver(LoginSchema),
@@ -104,12 +104,16 @@ export const FormLogin = () => {
             label="Email"
             variant="outlined"
             type="email"
+            error={!!errors.email}
+            helperText={errors.email?.message}
             {...register('email')}
           />
           <StyledInput
             label="Contraseña"
             variant="outlined"
             type="password"
+            error={!!errors.password}
+            helperText={errors.password?.message}
             {...register('password')}
           />
           <StyledButton
