@@ -4,16 +4,19 @@ import { RouterContext } from 'next/dist/shared/lib/router-context';
 import { createMockRouter } from '../../utils/createMockRouter';
 
 describe('LoginPage', () => {
-  it('should render the login page', () => {
+  beforeEach(() => {
+    const router = createMockRouter({
+      pathname: '/auth/login',
+    });
+    // eslint-disable-next-line testing-library/no-render-in-setup
     render(
-      <RouterContext.Provider
-        value={createMockRouter({
-          pathname: '/auth/login',
-        })}
-      >
+      <RouterContext.Provider value={router}>
         <LoginPage />
       </RouterContext.Provider>
     );
+  });
+
+  it('should render the login page', () => {
     expect(screen.getByText('Bienvenido a Kisaragi 👋🏻')).toBeInTheDocument();
   });
 });

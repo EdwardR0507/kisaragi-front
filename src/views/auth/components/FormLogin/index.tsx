@@ -101,6 +101,7 @@ export const FormLogin = () => {
         </Typography>
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
           <StyledInput
+            id="email"
             label="Email"
             variant="outlined"
             type="email"
@@ -109,6 +110,7 @@ export const FormLogin = () => {
             {...register('email')}
           />
           <StyledInput
+            id="password"
             label="Contraseña"
             variant="outlined"
             type="password"

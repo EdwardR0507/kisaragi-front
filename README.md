@@ -8,14 +8,14 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-
 ### To run all the tests:
+
 ```bash
 yarn test
 ```
 
 ### To be able to see the coverage
+
 ```bash
 yarn test:coverage
 ```
-

@@ -112,6 +112,7 @@ export const FormRegister = () => {
 
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
           <StyledInput
+            id="name"
             label="Nombre de usuario"
             variant="outlined"
             error={!!errors.user_name}
@@ -119,6 +120,7 @@ export const FormRegister = () => {
             {...register('user_name')}
           />
           <StyledInput
+            id="email"
             label="Email"
             variant="outlined"
             type="email"
@@ -127,6 +129,7 @@ export const FormRegister = () => {
             {...register('email')}
           />
           <StyledInput
+            id="password"
             label="Contraseña"
             variant="outlined"
             type="password"
@@ -135,6 +138,7 @@ export const FormRegister = () => {
             {...register('password')}
           />
           <StyledInput
+            id="telephone"
             label="Teléfono"
             variant="outlined"
             error={!!errors.telephone_number}
