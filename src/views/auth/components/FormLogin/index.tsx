@@ -1,9 +1,8 @@
 import Facebook from '@/public/facebook-icon.svg';
 import Google from '@/public/google-icon.svg';
-import { registerService } from '@/services/auth';
-import { DatePicker } from '@/ui/DatePicker';
-import { IRegister } from '@/views/auth/interfaces';
-import { RegisterSchema } from '@/views/auth/validators';
+import { loginService } from '@/services/auth';
+import { ILogin } from '@/views/auth/interfaces/';
+import { LoginSchema } from '@/views/auth/validators';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
@@ -13,11 +12,9 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import dayjs from 'dayjs';
 import Image from 'next/image';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -35,12 +32,12 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 const StyledForm = styled('form')(({ theme }) => ({
   width: '100%',
+  height: '330px',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-evenly',
   alignItems: 'center',
   gap: theme.spacing(3),
-  marginTop: theme.spacing(3),
 }));
 
 const StyledInput = styled(TextField)(() => ({
@@ -57,25 +54,18 @@ const StyledButton = styled(Button)(() => ({
   borderRadius: '10px',
 }));
 
-export const FormRegister = () => {
-  const router = useRouter();
+export const FormLogin = () => {
   const {
-    control,
     register,
     handleSubmit,
-    formState: { isValid, isDirty },
-  } = useForm<IRegister>({
+    formState: { isValid, isDirty, errors },
+  } = useForm<ILogin>({
     mode: 'onChange',
-    resolver: yupResolver(RegisterSchema),
+    resolver: yupResolver(LoginSchema),
   });
 
-  const onSubmit = async (form: IRegister) => {
-    const dataToSend = {
-      ...form,
-      birth_date: dayjs(form.birth_date).format('YYYY-MM-DD'),
-      role: 'USER',
-    };
-    const data = await registerService(dataToSend);
+  const onSubmit = async (form: ILogin) => {
+    const data = await loginService(form);
     if (data?.name == 'AxiosError') {
       Swal.fire({
         icon: 'error',
@@ -87,10 +77,8 @@ export const FormRegister = () => {
     Swal.fire({
       icon: 'success',
       title: 'Bienvenido',
-      text: 'Registrado correctamente',
-      timer: 2000,
+      text: 'Iniciaste sesión correctamente',
     });
-    router.push('/auth/login');
   };
 
   return (
@@ -104,71 +92,65 @@ export const FormRegister = () => {
           marginTop: '50px',
         }}
       >
-        <Typography variant="h6">La aventura comienza aquí 🚀</Typography>
+        <Typography variant="h6" align="center">
+          Bienvenido a Kisaragi 👋🏻
+        </Typography>
         <br />
         <Typography variant="body1" align="center">
-          Realiza tus compras por internet de forma segura y rápida
+          Inicie sesión en su cuenta y comience su aventura{' '}
         </Typography>
-
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
           <StyledInput
-            label="Nombre de usuario"
-            variant="outlined"
-            {...register('user_name')}
-          />
-          <StyledInput
+            id="email"
             label="Email"
             variant="outlined"
             type="email"
+            error={!!errors.email}
+            helperText={errors.email?.message}
             {...register('email')}
           />
           <StyledInput
+            id="password"
             label="Contraseña"
             variant="outlined"
             type="password"
+            error={!!errors.password}
+            helperText={errors.password?.message}
             {...register('password')}
-          />
-          <StyledInput
-            label="Teléfono"
-            variant="outlined"
-            {...register('telephone_number')}
-          />
-          <Controller
-            name="birth_date"
-            control={control}
-            defaultValue={null}
-            render={({ field, ...props }) => {
-              return (
-                <DatePicker title="Fecha de nacimiento" {...field} {...props} />
-              );
-            }}
           />
           <StyledButton
             variant="contained"
             color="primary"
             type="submit"
-            disabled={!isValid || !isDirty}
+            disabled={!isDirty || !isValid}
           >
-            Registrarse
+            Iniciar sesión
           </StyledButton>
         </StyledForm>
-
-        <Box marginTop={2}>
-          <Typography variant="body1" align="center">
-            ¿Ya tienes cuenta?{' '}
-            <span>
-              <NextLink href={`/auth/login`}>
-                <a
-                  style={{
-                    color: '#666CFF',
-                  }}
-                >
-                  Inicia sesión
-                </a>
-              </NextLink>
-            </span>
-          </Typography>
-        </Box>
+        <Typography
+          variant="body1"
+          align="center"
+          sx={{
+            width: '100%',
+          }}
+        >
+          ¿No tiene cuenta?{' '}
+          <span
+            style={{
+              color: 'red',
+            }}
+          >
+            <NextLink href={`/auth/register`}>
+              <a
+                style={{
+                  color: '#666CFF',
+                }}
+              >
+                Regístrese
+              </a>
+            </NextLink>
+          </span>
+        </Typography>
 
         <Box
           sx={{
@@ -178,9 +160,9 @@ export const FormRegister = () => {
             alignItems: 'center',
           }}
         >
-          <Divider sx={{ width: '30%', margin: '28px' }} />
+          <Divider sx={{ width: '35%', margin: '30px' }} />
           O
-          <Divider sx={{ width: '30%', margin: '28px' }} />
+          <Divider sx={{ width: '35%', margin: '30px' }} />
         </Box>
         <Box
           sx={{

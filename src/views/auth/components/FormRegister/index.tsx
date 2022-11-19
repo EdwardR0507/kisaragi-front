@@ -1,8 +1,9 @@
 import Facebook from '@/public/facebook-icon.svg';
 import Google from '@/public/google-icon.svg';
-import { loginService } from '@/services/auth';
-import { ILogin } from '@/views/auth/interfaces/';
-import { LoginSchema } from '@/views/auth/validators';
+import { registerService } from '@/services/auth';
+import { DatePicker } from '@/ui/DatePicker';
+import { IRegister } from '@/views/auth/interfaces';
+import { RegisterSchema } from '@/views/auth/validators';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
@@ -12,9 +13,11 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import dayjs from 'dayjs';
 import Image from 'next/image';
 import NextLink from 'next/link';
-import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import { Controller, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -32,12 +35,12 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 const StyledForm = styled('form')(({ theme }) => ({
   width: '100%',
-  height: '330px',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-evenly',
   alignItems: 'center',
-  gap: theme.spacing(3),
+  gap: theme.spacing(6),
+  marginTop: theme.spacing(3),
 }));
 
 const StyledInput = styled(TextField)(() => ({
@@ -54,18 +57,25 @@ const StyledButton = styled(Button)(() => ({
   borderRadius: '10px',
 }));
 
-export const FormLogin = () => {
+export const FormRegister = () => {
+  const router = useRouter();
   const {
+    control,
     register,
     handleSubmit,
-    formState: { isValid, isDirty },
-  } = useForm<ILogin>({
+    formState: { isValid, isDirty, errors },
+  } = useForm<IRegister>({
     mode: 'onChange',
-    resolver: yupResolver(LoginSchema),
+    resolver: yupResolver(RegisterSchema),
   });
 
-  const onSubmit = async (form: ILogin) => {
-    const data = await loginService(form);
+  const onSubmit = async (form: IRegister) => {
+    const dataToSend = {
+      ...form,
+      birth_date: dayjs(form.birth_date).format('YYYY-MM-DD'),
+      role: 'USER',
+    };
+    const data = await registerService(dataToSend);
     if (data?.name == 'AxiosError') {
       Swal.fire({
         icon: 'error',
@@ -77,8 +87,10 @@ export const FormLogin = () => {
     Swal.fire({
       icon: 'success',
       title: 'Bienvenido',
-      text: 'Iniciaste sesión correctamente',
+      text: 'Registrado correctamente',
+      timer: 2000,
     });
+    router.push('/auth/login');
   };
 
   return (
@@ -92,59 +104,83 @@ export const FormLogin = () => {
           marginTop: '50px',
         }}
       >
-        <Typography variant="h6" align="center">
-          Bienvenido a Kisaragi 👋🏻
-        </Typography>
+        <Typography variant="h6">La aventura comienza aquí 🚀</Typography>
         <br />
         <Typography variant="body1" align="center">
-          Inicie sesión en su cuenta y comience su aventura{' '}
+          Realiza tus compras por internet de forma segura y rápida
         </Typography>
+
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
           <StyledInput
+            id="name"
+            label="Nombre de usuario"
+            variant="outlined"
+            error={!!errors.user_name}
+            helperText={errors.user_name?.message}
+            {...register('user_name')}
+          />
+          <StyledInput
+            id="email"
             label="Email"
             variant="outlined"
             type="email"
+            error={!!errors.email}
+            helperText={errors.email?.message}
             {...register('email')}
           />
           <StyledInput
+            id="password"
             label="Contraseña"
             variant="outlined"
             type="password"
+            error={!!errors.password}
+            helperText={errors.password?.message}
             {...register('password')}
+          />
+          <StyledInput
+            id="telephone"
+            label="Teléfono"
+            variant="outlined"
+            error={!!errors.telephone_number}
+            helperText={errors.telephone_number?.message}
+            {...register('telephone_number')}
+          />
+          <Controller
+            name="birth_date"
+            control={control}
+            defaultValue={null}
+            render={({ field, ...props }) => {
+              return (
+                <DatePicker title="Fecha de nacimiento" {...field} {...props} />
+              );
+            }}
           />
           <StyledButton
             variant="contained"
             color="primary"
             type="submit"
-            disabled={!isDirty || !isValid}
+            disabled={!isValid || !isDirty}
           >
-            Iniciar sesión
+            Registrarse
           </StyledButton>
         </StyledForm>
-        <Typography
-          variant="body1"
-          align="center"
-          sx={{
-            width: '100%',
-          }}
-        >
-          ¿No tiene cuenta?{' '}
-          <span
-            style={{
-              color: 'red',
-            }}
-          >
-            <NextLink href={`/auth/register`}>
-              <a
-                style={{
-                  color: '#666CFF',
-                }}
-              >
-                Regístrese
-              </a>
-            </NextLink>
-          </span>
-        </Typography>
+
+        <Box marginTop={2}>
+          <Typography variant="body1" align="center">
+            ¿Ya tienes cuenta?{' '}
+            <span>
+              <NextLink href={`/auth/login`}>
+                <a
+                  style={{
+                    color: '#666CFF',
+                  }}
+                >
+                  Inicia sesión
+                </a>
+              </NextLink>
+            </span>
+          </Typography>
+        </Box>
 
         <Box
           sx={{
@@ -154,9 +190,9 @@ export const FormLogin = () => {
             alignItems: 'center',
           }}
         >
-          <Divider sx={{ width: '35%', margin: '30px' }} />
+          <Divider sx={{ width: '30%', margin: '28px' }} />
           O
-          <Divider sx={{ width: '35%', margin: '30px' }} />
+          <Divider sx={{ width: '30%', margin: '28px' }} />
         </Box>
         <Box
           sx={{
