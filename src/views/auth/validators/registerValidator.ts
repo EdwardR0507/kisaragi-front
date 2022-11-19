@@ -18,6 +18,7 @@ export const RegisterSchema = object().shape({
         if (value) return /^9\d{8}$/.test(value.toString());
         return false;
       }
-    ),
+    )
+    .typeError('Debe ser un número'),
   birth_date: date().required('Fecha de nacimiento requerida'),
 });

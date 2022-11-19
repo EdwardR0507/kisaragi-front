@@ -1,5 +1,5 @@
-import { ImageContent } from '@/components/Auth';
 import client from '@/public/client-login.svg';
+import { ImageContent } from '@/views/auth/components';
 import { render } from '@testing-library/react';
 
 describe('ImageContent', () => {

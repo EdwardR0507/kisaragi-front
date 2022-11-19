@@ -1,7 +1,7 @@
-import { FormLogin, ImageContent } from '@/components/Auth';
 import { AuthLayout } from '@/layouts/AuthLayout';
 import client from '@/public/client-login.svg';
 import { Logo } from '@/ui/Logo';
+import { FormLogin, ImageContent } from '@/views/auth/components';
 import { Box } from '@mui/system';
 import type { NextPage } from 'next';
 
