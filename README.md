@@ -16,16 +16,6 @@ yarn test
 
 ### To be able to see the coverage
 
-<<<<<<< HEAD
-
 ```bash
 yarn test:coverage
 ```
-
-=======
-
-```bash
-yarn test:coverage
-```
-
-> > > > > > > develop
