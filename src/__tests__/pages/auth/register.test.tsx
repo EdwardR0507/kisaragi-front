@@ -1,7 +1,7 @@
 import RegisterPage from '@/pages/auth/register';
 import { render, screen } from '@testing-library/react';
 import { RouterContext } from 'next/dist/shared/lib/router-context';
-import { createMockRouter } from '../../utils/createMockRouter';
+import { createMockRouter } from '../../../__mocks__/utils/createMockRouter';
 
 describe('RegisterPage', () => {
   it('should render the register page', () => {

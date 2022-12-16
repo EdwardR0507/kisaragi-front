@@ -20,7 +20,7 @@ const customJestConfig = {
     '^@/views/(.*)$': '<rootDir>/src/views/$1',
   },
   coveragePathIgnorePatterns: [
-    // Ignore Next.js specific files
+    // Ignore Next.js specific files and other files that don't need to be tested
     '/node_modules/',
     '/.next/',
     '/out/',
@@ -28,6 +28,7 @@ const customJestConfig = {
     '/jest.config.js',
     '/jest.setup.js',
     '/next.config.js',
+    '/src/config/',
     '/src/pages/_document.tsx',
     '/src/pages/_app.tsx',
     '/src/services/auth/',

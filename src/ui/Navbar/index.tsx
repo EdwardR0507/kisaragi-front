@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import NextLink from 'next/link';
 
-import { Cart } from '../icons/';
+import { Cart, Hamburger } from '../icons/';
 import { Logo } from '../Logo/index';
 
 export const Navbar = () => {
@@ -27,17 +27,17 @@ export const Navbar = () => {
           }}
         >
           <NextLink href="/" passHref>
-            <Link>
+            <Link underline="none">
               <Button>Inicio</Button>
             </Link>
           </NextLink>
           <NextLink href="/productos" passHref>
-            <Link>
+            <Link underline="none">
               <Button>Productos</Button>
             </Link>
           </NextLink>
           <NextLink href="/servicios" passHref>
-            <Link>
+            <Link underline="none">
               <Button>Servicios</Button>
             </Link>
           </NextLink>
@@ -52,6 +52,13 @@ export const Navbar = () => {
             </IconButton>
           </Link>
         </NextLink>
+        <IconButton
+          sx={{
+            marginLeft: 1,
+          }}
+        >
+          <Hamburger fill="#eee" />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

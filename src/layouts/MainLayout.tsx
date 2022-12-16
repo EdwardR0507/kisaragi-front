@@ -1,4 +1,6 @@
+import { Footer } from '@/ui/Footer';
 import { Navbar } from '@/ui/Navbar';
+import { SideMenu } from '@/ui/SideMenu';
 import Head from 'next/head';
 import { FC } from 'react';
 
@@ -27,17 +29,21 @@ export const MainLayout: FC<MainLayoutProps> = ({
       <nav>
         <Navbar />
       </nav>
-      {/* <SideMenu></SideMenu> */}
+      <SideMenu />
       <main
         style={{
           margin: '80px auto',
           maxWidth: '1400px',
           padding: '0 30px',
+          minHeight: '100vh',
         }}
       >
         {children}
       </main>
-      <footer>{/* TODO: Footer*/}</footer>
+      {/* TODO: Responsive footer */}
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };
