@@ -1,6 +1,6 @@
 import Facebook from '@/public/facebook-icon.svg';
 import Google from '@/public/google-icon.svg';
-import { loginService } from '@/services/auth';
+
 import { ILogin } from '@/views/auth/interfaces/';
 import { LoginSchema } from '@/views/auth/validators';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,8 +12,10 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 
@@ -55,6 +57,7 @@ const StyledButton = styled(Button)(() => ({
 }));
 
 export const FormLogin = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -64,21 +67,29 @@ export const FormLogin = () => {
     resolver: yupResolver(LoginSchema),
   });
 
-  const onSubmit = async (form: ILogin) => {
-    const data = await loginService(form);
-    if (data?.name == 'AxiosError') {
+  const onSubmit = async ({ email, password }: ILogin) => {
+    const status = await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+    });
+    if (status?.error) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: data?.response?.data?.detail,
+        text: 'Credenciales incorrectas',
       });
       return;
     }
     Swal.fire({
       icon: 'success',
       title: 'Bienvenido',
-      text: 'Iniciaste sesión correctamente',
+      text: 'Iniciando sesión',
+      timer: 1000,
+      timerProgressBar: true,
+      showConfirmButton: false,
     });
+    router.push('/');
   };
 
   return (

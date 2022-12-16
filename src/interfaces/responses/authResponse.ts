@@ -1,6 +1,6 @@
-import { User } from '../models/UserModel';
+import { IUser } from '../models/UserModel';
 
 export interface IAuthResponse {
-  user: User;
+  user: IUser;
   token: string;
 }

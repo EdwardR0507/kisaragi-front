@@ -1,9 +1,12 @@
+import type { NextPage } from 'next';
+import { GetServerSideProps } from 'next';
+import { getSession } from 'next-auth/react';
+
 import { AuthLayout } from '@/layouts/AuthLayout';
 import client from '@/public/client-login.svg';
 import { Logo } from '@/ui/Logo';
 import { FormLogin, ImageContent } from '@/views/auth/components';
 import { Box } from '@mui/system';
-import type { NextPage } from 'next';
 
 const LoginPage: NextPage = () => {
   return (
@@ -23,5 +26,24 @@ const LoginPage: NextPage = () => {
     </AuthLayout>
   );
 };
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  query,
+}) => {
+  const session = await getSession({ req }); // your fetch function here
 
+  const { p = '/' } = query;
+
+  if (session) {
+    return {
+      redirect: {
+        destination: p.toString(),
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};
 export default LoginPage;
