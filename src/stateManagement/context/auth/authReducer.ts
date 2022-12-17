@@ -20,7 +20,7 @@ export const authReducer = (
       return {
         ...state,
         isLoggedIn: false,
-        user: undefined,
+        user: null,
       };
 
     default:
