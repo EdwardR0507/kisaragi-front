@@ -89,7 +89,7 @@ export const FormLogin = () => {
       timerProgressBar: true,
       showConfirmButton: false,
     });
-    router.push('/');
+    router.replace('/');
   };
 
   return (

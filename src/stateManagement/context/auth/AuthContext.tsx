@@ -4,7 +4,7 @@ import { IUser } from '@/interfaces/index';
 
 interface IAuthContext {
   isLoggedIn: boolean;
-  user?: IUser;
+  user: IUser | null;
   logoutUser: () => void;
 }
 

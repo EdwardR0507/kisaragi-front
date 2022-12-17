@@ -1,59 +1,81 @@
-import { Box, Drawer, List, ListItem, ListItemText } from '@mui/material';
-//   import {
-//     AccountCircleOutlined,
-//     AdminPanelSettings,
-//     CategoryOutlined,
-//     ConfirmationNumberOutlined,
-//     EscalatorWarningOutlined,
-//     FemaleOutlined,
-//     LoginOutlined,
-//     MaleOutlined,
-//     SearchOutlined,
-//     VpnKeyOutlined,
-//   } from "@mui/icons-material";
+import { AuthContext, UiContext } from '@/stateManagement/context';
+import {
+  Box,
+  Drawer,
+  IconButton,
+  Input,
+  InputAdornment,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from '@mui/material';
+import { useRouter } from 'next/router';
+import { useContext, useState } from 'react';
+import { Search } from '../icons';
 
 export const SideMenu = () => {
+  const router = useRouter();
+  const { isMenuOpen, toggleSideMenu } = useContext(UiContext);
+  const { logoutUser } = useContext(AuthContext);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const onSearchTerm = () => {
+    if (searchTerm.trim().length === 0) return;
+    navigateTo(`/search/${searchTerm}`);
+  };
+
+  const navigateTo = (path: string) => {
+    toggleSideMenu();
+    router.push(path);
+  };
+
   return (
     <Drawer
-      open={false}
-      anchor="left"
+      open={isMenuOpen}
+      anchor="right"
       sx={{ backdropFilter: 'blur(4px)', transition: 'all 0.5s ease-out' }}
+      onClose={toggleSideMenu}
     >
       <Box sx={{ width: 250, paddingTop: 5 }}>
         <List>
           <ListItem>
-            {/* <Input
+            <Input
+              autoFocus
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyPress={(e) => (e.key === 'Enter' ? onSearchTerm() : null)}
               type="text"
               placeholder="Buscar..."
               endAdornment={
                 <InputAdornment position="end">
-                  <IconButton aria-label="toggle password visibility">
-                    <SearchOutlined />
+                  <IconButton onClick={onSearchTerm}>
+                    <Search fill="#eee" />
                   </IconButton>
                 </InputAdornment>
               }
-            /> */}
+            />
           </ListItem>
 
-          <ListItem button>
+          <ListItemButton>
             <ListItemText primary={'Mi Perfil'} />
-          </ListItem>
+          </ListItemButton>
 
-          <ListItem button>
+          <ListItemButton>
             <ListItemText primary={'Mis Pedidos'} />
-          </ListItem>
+          </ListItemButton>
 
-          <ListItem button sx={{ display: { xs: '', sm: 'none' } }}>
+          <ListItemButton sx={{ display: { xs: '', sm: 'none' } }}>
             <ListItemText primary={'Productos'} />
-          </ListItem>
+          </ListItemButton>
 
-          <ListItem button sx={{ display: { xs: '', sm: 'none' } }}>
+          <ListItemButton sx={{ display: { xs: '', sm: 'none' } }}>
             <ListItemText primary={'Servicios'} />
-          </ListItem>
+          </ListItemButton>
 
-          <ListItem button>
+          <ListItemButton onClick={logoutUser}>
             <ListItemText primary={'Cerrar sesión'} />
-          </ListItem>
+          </ListItemButton>
         </List>
       </Box>
     </Drawer>

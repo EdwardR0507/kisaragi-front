@@ -1,19 +1,17 @@
-import { Footer, Navbar, SideMenu } from '@/ui';
+import { SideMenu, StoreNavbar } from '@/ui';
 import Head from 'next/head';
 import { FC } from 'react';
 
-interface MainLayoutProps {
+interface StoreLayoutProps {
   children: React.ReactNode;
   title: string;
   pageDescription: string;
-  imageFullUrl?: string;
 }
 
-export const MainLayout: FC<MainLayoutProps> = ({
+export const StoreLayout: FC<StoreLayoutProps> = ({
   children,
   title,
   pageDescription,
-  imageFullUrl,
 }) => {
   return (
     <>
@@ -22,26 +20,21 @@ export const MainLayout: FC<MainLayoutProps> = ({
         <meta name="description" content={pageDescription} />
         <meta name="og:title" content={title} />
         <meta name="og:description" content={pageDescription} />
-        {imageFullUrl && <meta name="og:image" content={imageFullUrl} />}
       </Head>
       <nav>
-        <Navbar />
+        <StoreNavbar />
       </nav>
       <SideMenu />
       <main
         style={{
-          margin: '80px auto',
+          marginTop: '80px',
           maxWidth: '1400px',
           padding: '0 30px',
-          minHeight: '100vh',
+          minHeight: '100vh ',
         }}
       >
         {children}
       </main>
-      {/* TODO: Responsive footer */}
-      <footer>
-        <Footer />
-      </footer>
     </>
   );
 };

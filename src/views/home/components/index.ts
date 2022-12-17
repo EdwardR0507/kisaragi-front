@@ -1,2 +1,2 @@
-export * from './ProductCard';
-export * from './ProductList';
+export * from './StoreCard';
+export * from './StoreList';

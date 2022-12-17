@@ -6,12 +6,12 @@ import { AuthContext, authReducer } from './';
 
 export interface AuthState {
   isLoggedIn: boolean;
-  user?: IUser;
+  user: IUser | null;
 }
 
 const Auth_INITIAL_STATE: AuthState = {
   isLoggedIn: false,
-  user: undefined,
+  user: null,
 };
 
 interface AuthProps {
@@ -24,7 +24,7 @@ export const AuthProvider: FC<AuthProps> = ({ children }) => {
 
   const logoutUser = () => {
     signOut({
-      callbackUrl: `${process.env.NEXT_PUBLIC_KISARAGI_AUTH}/`,
+      callbackUrl: `/auth/login`,
     });
   };
 
