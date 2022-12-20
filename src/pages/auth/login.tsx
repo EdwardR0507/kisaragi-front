@@ -4,7 +4,6 @@ import { getSession } from 'next-auth/react';
 
 import { AuthLayout } from '@/layouts/AuthLayout';
 import client from '@/public/client-login.svg';
-import { Logo } from '@/ui/Logo';
 import { FormLogin, ImageContent } from '@/views/auth/components';
 import { Box } from '@mui/system';
 
@@ -19,7 +18,6 @@ const LoginPage: NextPage = () => {
           minHeight: '100vh',
         }}
       >
-        <Logo />
         <FormLogin />
         <ImageContent image={client} />
       </Box>

@@ -1,3 +1,4 @@
+import { IStoreData } from '@/interfaces';
 import {
   Box,
   Card,
@@ -8,7 +9,6 @@ import {
   Typography,
 } from '@mui/material';
 import NextLink from 'next/link';
-import { IStoreData } from '../../interfaces';
 
 interface StoreCardProps {
   store: IStoreData;
@@ -18,7 +18,7 @@ export const StoreCard = ({ store }: StoreCardProps) => {
   return (
     <Grid item xs={6} sm={4}>
       <Card>
-        <NextLink href={`/store/a`} passHref prefetch={false}>
+        <NextLink href={`/store/${store.id}`} passHref prefetch={false}>
           <Link>
             <CardActionArea>
               <CardMedia

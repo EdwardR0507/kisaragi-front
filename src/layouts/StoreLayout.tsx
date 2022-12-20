@@ -1,4 +1,4 @@
-import { SideMenu, StoreNavbar } from '@/ui';
+import { Navbar, SideMenu } from '@/ui';
 import Head from 'next/head';
 import { FC } from 'react';
 
@@ -22,7 +22,7 @@ export const StoreLayout: FC<StoreLayoutProps> = ({
         <meta name="og:description" content={pageDescription} />
       </Head>
       <nav>
-        <StoreNavbar />
+        <Navbar />
       </nav>
       <SideMenu />
       <main

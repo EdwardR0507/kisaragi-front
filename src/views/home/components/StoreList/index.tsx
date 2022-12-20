@@ -1,5 +1,5 @@
+import { IStoreData } from '@/interfaces';
 import { Grid } from '@mui/material';
-import { IStoreData } from '../../interfaces';
 import { StoreCard } from '../StoreCard';
 
 interface StoreProps {

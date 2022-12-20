@@ -1,3 +1,5 @@
+import { IStoreProduct } from './ProductModel';
+
 export interface IStoreData {
   id: number;
   adminId: string;
@@ -18,21 +20,5 @@ export interface IStore {
 
 export interface StoreCategory {
   id: number;
-  name: string;
-}
-
-export interface IStoreProduct {
-  id: number;
-  productCategory: ProductCategory;
-  name: string;
-  description: string;
-  unitPrice: number;
-  stock: number;
-  image: null;
-}
-
-export interface ProductCategory {
-  id: number;
-  storeProductCategory: string;
   name: string;
 }

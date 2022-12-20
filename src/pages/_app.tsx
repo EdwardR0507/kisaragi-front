@@ -1,4 +1,9 @@
-import { AuthProvider, UiProvider } from '@/stateManagement/context';
+import {
+  AuthProvider,
+  CartProvider,
+  UiProvider,
+} from '@/stateManagement/context';
+import { StoreProvider } from '@/stateManagement/context/store';
 import '@/styles/globals.css';
 import { darkTheme } from '@/themes/index';
 import { CssBaseline, ThemeProvider } from '@mui/material';
@@ -32,12 +37,16 @@ function MyApp({
         }}
       >
         <AuthProvider>
-          <UiProvider>
-            <ThemeProvider theme={darkTheme}>
-              <CssBaseline />
-              <Component {...pageProps} />
-            </ThemeProvider>
-          </UiProvider>
+          <StoreProvider>
+            <CartProvider>
+              <UiProvider>
+                <ThemeProvider theme={darkTheme}>
+                  <CssBaseline />
+                  <Component {...pageProps} />
+                </ThemeProvider>
+              </UiProvider>
+            </CartProvider>
+          </StoreProvider>
         </AuthProvider>
       </SWRConfig>
     </SessionProvider>

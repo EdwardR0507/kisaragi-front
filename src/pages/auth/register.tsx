@@ -1,6 +1,5 @@
 import { AuthLayout } from '@/layouts/AuthLayout';
 import client from '@/public/client-register.svg';
-import { Logo } from '@/ui/Logo';
 import { FormRegister, ImageContent } from '@/views/auth/components';
 import { Box } from '@mui/system';
 import type { NextPage } from 'next';
@@ -16,7 +15,6 @@ const RegisterPage: NextPage = () => {
           minHeight: '100vh',
         }}
       >
-        <Logo />
         <ImageContent image={client} />
         <FormRegister />
       </Box>

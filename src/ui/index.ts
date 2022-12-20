@@ -1,6 +1,7 @@
 export * from './DatePicker';
 export * from './Footer';
 export * from './icons';
+export * from './ItemCounter';
 export * from './Loading';
 export * from './Logo';
 export * from './Navbar';

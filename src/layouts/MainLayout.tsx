@@ -1,4 +1,4 @@
-import { Footer, Navbar, SideMenu } from '@/ui';
+import { Footer, SideMenu, StoreNavbar } from '@/ui';
 import Head from 'next/head';
 import { FC } from 'react';
 
@@ -25,7 +25,7 @@ export const MainLayout: FC<MainLayoutProps> = ({
         {imageFullUrl && <meta name="og:image" content={imageFullUrl} />}
       </Head>
       <nav>
-        <Navbar />
+        <StoreNavbar />
       </nav>
       <SideMenu />
       <main
@@ -33,7 +33,6 @@ export const MainLayout: FC<MainLayoutProps> = ({
           margin: '80px auto',
           maxWidth: '1400px',
           padding: '0 30px',
-          minHeight: '100vh',
         }}
       >
         {children}
