@@ -19,7 +19,6 @@ const StorePage: NextPage<StorePageProps> = ({ store }) => {
   const categories = store.store_data.storeCategories
     .map((category) => category.name)
     .join(', ');
-  console.log('cat:', categories);
   useEffect(() => {
     if (!storeContextData) setStore(store);
   }, [storeContextData, setStore, store]);

@@ -25,6 +25,7 @@ export const AuthProvider: FC<AuthProps> = ({ children }) => {
   const logoutUser = () => {
     signOut({
       callbackUrl: `/auth/login`,
+      redirect: true,
     });
   };
 
