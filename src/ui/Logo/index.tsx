@@ -20,7 +20,7 @@ export const Logo = () => {
       position="absolute"
       sx={{
         top: {
-          xs: '3%',
+          xs: '10%',
           md: '2%',
         },
         left: {

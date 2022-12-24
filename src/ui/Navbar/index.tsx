@@ -1,57 +1,26 @@
-import {
-  AppBar,
-  Badge,
-  Box,
-  Button,
-  IconButton,
-  Link,
-  Toolbar,
-} from '@mui/material';
-import NextLink from 'next/link';
-
-import { Cart } from '../icons/';
+import { AuthContext } from '@/stateManagement/context';
+import { AppBar, Box, Button, Toolbar } from '@mui/material';
+import { useContext } from 'react';
+import { LogOut } from '../icons';
 import { Logo } from '../Logo/index';
 
 export const Navbar = () => {
+  const { logoutUser } = useContext(AuthContext);
+
   return (
     <AppBar position="fixed">
       <Toolbar>
         <Logo />
-        <Box flex={1} />
-        <Box
+        <Box flex={2} />
+        <Button
+          startIcon={<LogOut fill="#eee" />}
+          onClick={logoutUser}
           sx={{
-            display: {
-              xs: 'none',
-              sm: 'block',
-            },
+            color: '#eee',
           }}
         >
-          <NextLink href="/" passHref>
-            <Link>
-              <Button>Inicio</Button>
-            </Link>
-          </NextLink>
-          <NextLink href="/productos" passHref>
-            <Link>
-              <Button>Productos</Button>
-            </Link>
-          </NextLink>
-          <NextLink href="/servicios" passHref>
-            <Link>
-              <Button>Servicios</Button>
-            </Link>
-          </NextLink>
-        </Box>
-        <Box flex={1} />
-        <NextLink href="/cart">
-          <Link>
-            <IconButton>
-              <Badge badgeContent={1} color="secondary">
-                <Cart fill="#eee" />
-              </Badge>
-            </IconButton>
-          </Link>
-        </NextLink>
+          Cerrar Sesión
+        </Button>
       </Toolbar>
     </AppBar>
   );

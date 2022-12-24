@@ -1,6 +1,6 @@
 import { PaymentInformation } from './PaymentInformationModel';
 
-export interface User {
+export interface IUser {
   user_id: string;
   user_name: string;
   email: string;

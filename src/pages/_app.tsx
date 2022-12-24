@@ -1,13 +1,55 @@
+import {
+  AuthProvider,
+  CartProvider,
+  UiProvider,
+} from '@/stateManagement/context';
+import { StoreProvider } from '@/stateManagement/context/store';
+import '@/styles/globals.css';
 import { darkTheme } from '@/themes/index';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
+import { SWRConfig } from 'swr';
+import { kisaragi_core } from '../config/api';
 
-function MyApp({ Component, pageProps }: AppProps) {
+const fetcher = async (url: string) => {
+  try {
+    const res = await kisaragi_core.get(url);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+function MyApp({
+  Component,
+  pageProps,
+}: AppProps<{
+  session: Session;
+}>) {
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <SessionProvider session={pageProps.session}>
+      <SWRConfig
+        value={{
+          fetcher,
+        }}
+      >
+        <AuthProvider>
+          <StoreProvider>
+            <CartProvider>
+              <UiProvider>
+                <ThemeProvider theme={darkTheme}>
+                  <CssBaseline />
+                  <Component {...pageProps} />
+                </ThemeProvider>
+              </UiProvider>
+            </CartProvider>
+          </StoreProvider>
+        </AuthProvider>
+      </SWRConfig>
+    </SessionProvider>
   );
 }
 

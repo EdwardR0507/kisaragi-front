@@ -1,4 +1,4 @@
-import { Navbar } from '@/ui/Navbar';
+import { Footer, SideMenu, StoreNavbar } from '@/ui/index';
 import Head from 'next/head';
 import { FC } from 'react';
 
@@ -25,9 +25,9 @@ export const MainLayout: FC<MainLayoutProps> = ({
         {imageFullUrl && <meta name="og:image" content={imageFullUrl} />}
       </Head>
       <nav>
-        <Navbar />
+        <StoreNavbar />
       </nav>
-      {/* <SideMenu></SideMenu> */}
+      <SideMenu />
       <main
         style={{
           margin: '80px auto',
@@ -37,7 +37,10 @@ export const MainLayout: FC<MainLayoutProps> = ({
       >
         {children}
       </main>
-      <footer>{/* TODO: Footer*/}</footer>
+      {/* TODO: Responsive footer */}
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };

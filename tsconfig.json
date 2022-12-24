@@ -20,6 +20,12 @@
     "noImplicitThis": true,
     "strictNullChecks": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/ui/Icons/*"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/ui/Icons/*",
+    "src/views/store/components/OrderSummary"
+  ],
   "exclude": ["node_modules"]
 }

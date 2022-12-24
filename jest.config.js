@@ -10,17 +10,17 @@ const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   moduleNameMapper: {
     // Handle module aliases (this will be automatically configured for you soon)
-    '^@/components/(.*)$': '<rootDir>/src/components/$1',
     '^@/config/(.*)$': '<rootDir>/src/config/$1',
     '^@/layouts/(.*)$': '<rootDir>/src/layouts/$1',
     '^@/pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@/public/(.*)$': '<rootDir>/public/$1',
     '^@/services/(.*)$': '<rootDir>/src/services/$1',
+    '^@/stateManagement/(.*)$': '<rootDir>/src/stateManagement/$1',
     '^@/ui/(.*)$': '<rootDir>/src/ui/$1',
     '^@/views/(.*)$': '<rootDir>/src/views/$1',
   },
   coveragePathIgnorePatterns: [
-    // Ignore Next.js specific files
+    // Ignore Next.js specific files and other files that don't need to be tested
     '/node_modules/',
     '/.next/',
     '/out/',
@@ -28,10 +28,13 @@ const customJestConfig = {
     '/jest.config.js',
     '/jest.setup.js',
     '/next.config.js',
+    '/src/config/',
     '/src/pages/_document.tsx',
     '/src/pages/_app.tsx',
     '/src/services/auth/',
     '/src/views/auth/validators/',
+    '/src/stateManagement/context/auth',
+    '/src/ui/ItemCounter',
   ],
   testEnvironment: 'jest-environment-jsdom',
 };
