@@ -12,7 +12,7 @@ import { FC, useContext } from 'react';
 
 import { ICartProduct } from '@/interfaces';
 import { CartContext, StoreContext } from '@/stateManagement/context';
-import { ItemCounter } from '@/ui';
+import { ItemCounter } from '@/ui/index';
 import { useRouter } from 'next/router';
 import { currencyFormat } from '../../utils';
 

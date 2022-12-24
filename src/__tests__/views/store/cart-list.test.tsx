@@ -1,26 +1,22 @@
 import { CartProvider, StoreProvider } from '@/stateManagement/context';
+import { CartList } from '@/views/store/components/index';
 import { render, screen } from '@testing-library/react';
 import { RouterContext } from 'next/dist/shared/lib/router-context';
-import { MainLayout } from '../../layouts/MainLayout';
-import { createMockRouter } from '../../__mocks__/utils/createMockRouter';
+import { storeProduct } from '../../../__mocks__/utils/createEntity';
+import { createMockRouter } from '../../../__mocks__/utils/createMockRouter';
 
-describe('MainLayout', () => {
+describe('CartList', () => {
   beforeEach(() => {
     const router = createMockRouter({
-      pathname: '/',
+      pathname: '/store/1/',
     });
-
+    const products = [storeProduct];
     // eslint-disable-next-line testing-library/no-render-in-setup
     render(
       <RouterContext.Provider value={router}>
         <StoreProvider>
           <CartProvider>
-            <MainLayout
-              title="Kisaragi"
-              pageDescription="Tienda de productos para pymes y emprendedores"
-            >
-              <div>Test</div>
-            </MainLayout>
+            <CartList products={products as any} />
           </CartProvider>
         </StoreProvider>
       </RouterContext.Provider>
@@ -28,9 +24,9 @@ describe('MainLayout', () => {
   });
 
   it('should render successfully', () => {
-    const element = screen.getAllByText(
-      (content, element) => element?.textContent === 'Productos'
+    const element = screen.getByText(
+      (content, element) => element?.textContent === 'Product 1'
     );
-    expect(element[0]).toBeInTheDocument();
+    expect(element).toBeInTheDocument();
   });
 });

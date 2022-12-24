@@ -1,4 +1,4 @@
-import { Footer, SideMenu, StoreNavbar } from '@/ui';
+import { Footer, SideMenu, StoreNavbar } from '@/ui/index';
 import Head from 'next/head';
 import { FC } from 'react';
 

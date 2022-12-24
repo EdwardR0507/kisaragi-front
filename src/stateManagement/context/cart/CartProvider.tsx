@@ -1,4 +1,4 @@
-import { kisaragi_core } from '@/config';
+import { kisaragi_core } from '@/config/index';
 import {
   ICartProduct,
   IOrderCreate,

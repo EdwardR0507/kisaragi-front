@@ -5,6 +5,5 @@ export { default as CreditCard } from './CreditCard';
 export { default as Hamburger } from './Hamburger';
 export { default as LogOut } from './LogOut';
 export { default as RemoveIcon } from './RemoveIcon';
-export { default as Search } from './Search';
-export { default as Visibilitty } from './Visibilitty';
-export { default as VisibilittyOff } from './VisibilittyOff';
+export { default as Visibility } from './Visibility';
+export { default as VisibilityOff } from './VisibilityOff';

@@ -1,10 +1,10 @@
-import { Cart } from '@/ui/Icons';
+import { Hamburger } from '@/ui/icons';
 import { render } from '@testing-library/react';
 
-describe('Cart', () => {
+describe('Hamburger', () => {
   it('should render successfully', () => {
     const fill = '#EAEAFFDE';
-    const { baseElement } = render(<Cart fill={fill} />);
+    const { baseElement } = render(<Hamburger fill={fill} />);
     expect(baseElement).toBeTruthy();
   });
 });

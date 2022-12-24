@@ -1,5 +1,5 @@
+import { AuthLayout } from '@/layouts/index';
 import { render } from '@testing-library/react';
-import { AuthLayout } from '../../layouts';
 
 describe('AuthLayout', () => {
   it('should render successfully', () => {

@@ -1,4 +1,4 @@
-import { Navbar, SideMenu } from '@/ui';
+import { Navbar, SideMenu } from '@/ui/index';
 import Head from 'next/head';
 import { FC } from 'react';
 

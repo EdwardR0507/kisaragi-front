@@ -1,26 +1,20 @@
 import { CartProvider, StoreProvider } from '@/stateManagement/context';
+import { Navbar } from '@/ui/Navbar';
 import { render, screen } from '@testing-library/react';
 import { RouterContext } from 'next/dist/shared/lib/router-context';
-import { MainLayout } from '../../layouts/MainLayout';
 import { createMockRouter } from '../../__mocks__/utils/createMockRouter';
 
-describe('MainLayout', () => {
+describe('Navbar', () => {
   beforeEach(() => {
     const router = createMockRouter({
-      pathname: '/',
+      pathname: '/store/1/',
     });
-
     // eslint-disable-next-line testing-library/no-render-in-setup
     render(
       <RouterContext.Provider value={router}>
         <StoreProvider>
           <CartProvider>
-            <MainLayout
-              title="Kisaragi"
-              pageDescription="Tienda de productos para pymes y emprendedores"
-            >
-              <div>Test</div>
-            </MainLayout>
+            <Navbar />
           </CartProvider>
         </StoreProvider>
       </RouterContext.Provider>
@@ -29,7 +23,7 @@ describe('MainLayout', () => {
 
   it('should render successfully', () => {
     const element = screen.getAllByText(
-      (content, element) => element?.textContent === 'Productos'
+      (content, element) => element?.textContent === 'Kisaragi'
     );
     expect(element[0]).toBeInTheDocument();
   });

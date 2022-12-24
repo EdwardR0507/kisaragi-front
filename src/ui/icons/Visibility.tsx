@@ -1,6 +1,6 @@
 import { SVGProps } from 'react';
 
-const Visibilitty = (props: SVGProps<SVGSVGElement>) => (
+const Visibility = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width={24}
     height={24}
@@ -15,4 +15,4 @@ const Visibilitty = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export default Visibilitty;
+export default Visibility;

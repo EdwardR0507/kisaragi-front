@@ -1,10 +1,10 @@
-import { VisibilittyOff } from '@/ui/icons';
+import { CreditCard } from '@/ui/icons';
 import { render } from '@testing-library/react';
 
-describe('VisibilittyOff', () => {
+describe('CreditCard', () => {
   it('should render successfully', () => {
     const fill = '#EAEAFFDE';
-    const { baseElement } = render(<VisibilittyOff fill={fill} />);
+    const { baseElement } = render(<CreditCard fill={fill} />);
     expect(baseElement).toBeTruthy();
   });
 });

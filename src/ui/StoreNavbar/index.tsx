@@ -15,7 +15,7 @@ import {
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
-import { Cart, Hamburger, Search } from '../icons';
+import { Cart, Hamburger } from '../icons';
 import { Logo } from '../Logo/index';
 
 export const StoreNavbar = () => {
@@ -59,13 +59,7 @@ export const StoreNavbar = () => {
               </Button>
             </Link>
           </NextLink>
-          {/* <NextLink href="/products" passHref>
-            <Link underline="none">
-              <Button color={asPath === '/products' ? 'warning' : 'primary'}>
-                Productos
-              </Button>
-            </Link>
-          </NextLink> */}
+
           <NextLink href="#" passHref>
             <Link underline="none">
               <Button color={asPath === '/services' ? 'warning' : 'primary'}>
@@ -75,18 +69,6 @@ export const StoreNavbar = () => {
           </NextLink>
         </Box>
         <Box flex={1} />
-
-        <IconButton
-          sx={{
-            display: {
-              xs: 'flex',
-              sm: 'none',
-            },
-          }}
-          onClick={toggleSideMenu}
-        >
-          <Search fill="#eee" />
-        </IconButton>
 
         <NextLink href={`/store/${storeId || store?.store_data.id}/cart`}>
           <Link>
