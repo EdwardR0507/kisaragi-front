@@ -25,6 +25,7 @@ const CustomDatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           inputFormat="DD/MM/YYYY"
           views={['year', 'month', 'day']}
           value={value}
+          maxDate={new Date()}
           onChange={(newValue: any) => {
             setValue(newValue);
           }}
