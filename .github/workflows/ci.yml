@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy_dev:
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: yarn install
+      - name: Install eslint
+        run: yarn add  @typescript-eslint/eslint-plugin@latest eslint-plugin-react@latest --save-dev
+      - name: Install prettier
+        run: yarn add prettier
+      - name: Run lint
+        run: yarn lint
+      - name: Run prettier
+        run: yarn prettier
+      - name: Run test
+        run: yarn test
+      - name: Run build
+        run: yarn build
