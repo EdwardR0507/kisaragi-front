@@ -1,9 +1,11 @@
+import { kisaragi_core } from '@/config';
 import { IOrderResponse } from '@/interfaces';
 import { MainLayout } from '@/layouts';
 import { StoreContext } from '@/stateManagement/context';
 import { Grid, Typography } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
+import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
 
@@ -93,6 +95,32 @@ const HistoryPage: NextPage<HistoryPageProps> = ({ orders }) => {
       </Grid>
     </MainLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session: any = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+  }
+
+  const { data: orders }: { data: any } = await kisaragi_core.post(
+    '/orders/by_user',
+    {
+      userId: session.user.user_id,
+    }
+  );
+
+  return {
+    props: {
+      orders,
+    },
+  };
 };
 
 export default HistoryPage;
