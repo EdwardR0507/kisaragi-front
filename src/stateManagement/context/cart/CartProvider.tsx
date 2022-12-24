@@ -1,8 +1,14 @@
-import { ICartProduct, IOrderSummary, IShippingAddress } from '@/interfaces';
+import { kisaragi_core } from '@/config';
+import {
+  ICartProduct,
+  IOrderCreate,
+  IOrderSummary,
+  IShippingAddress,
+} from '@/interfaces';
+import axios from 'axios';
 import Cookies from 'js-cookie';
 import React, { FC, useEffect, useReducer } from 'react';
 import { CartContext, cartReducer } from './';
-
 export interface CartState {
   cart: ICartProduct[];
   isLoaded: boolean;
@@ -139,6 +145,53 @@ export const CartProvider: FC<CartProps> = ({ children }) => {
     });
   };
 
+  const createOrder = async (
+    storeId: number,
+    userId: string
+  ): Promise<{
+    hasError: boolean;
+    message: string;
+  }> => {
+    if (!state.shippingAddress) throw new Error('No ha agregado una dirección');
+
+    const products = state.cart.map((p) => {
+      return {
+        idProduct: Number(p.id),
+        quantity: Number(p.quantity),
+      };
+    });
+
+    const body: IOrderCreate = {
+      address: state.shippingAddress.address,
+      tracking: crypto.randomUUID(),
+      total: state.orderSummary.total,
+      products,
+      storeId,
+      userId,
+    };
+
+    try {
+      const { data } = await kisaragi_core.post('/orders/save', body);
+      dispatch({ type: '[Cart] - Order complete' });
+
+      return {
+        hasError: false,
+        message: data.tracking!,
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return {
+          hasError: true,
+          message: error.response?.data.message || 'Algo salió mal',
+        };
+      }
+      return {
+        hasError: true,
+        message: 'Algo salió mal',
+      };
+    }
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -147,6 +200,7 @@ export const CartProvider: FC<CartProps> = ({ children }) => {
         removeCartProduct,
         updateCartQuantity,
         updateAddress,
+        createOrder,
       }}
     >
       {children}

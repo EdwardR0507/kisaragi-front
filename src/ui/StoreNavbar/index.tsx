@@ -55,7 +55,7 @@ export const StoreNavbar = () => {
                     : 'primary'
                 }
               >
-                Inicio
+                Productos
               </Button>
             </Link>
           </NextLink>
@@ -66,7 +66,7 @@ export const StoreNavbar = () => {
               </Button>
             </Link>
           </NextLink> */}
-          <NextLink href="/services" passHref>
+          <NextLink href="#" passHref>
             <Link underline="none">
               <Button color={asPath === '/services' ? 'warning' : 'primary'}>
                 Servicios

@@ -1,6 +1,7 @@
 export { default as AddIcon } from './AddIcon';
 export { default as Cart } from './Cart';
 export { default as CloseIcon } from './CloseIcon';
+export { default as CreditCard } from './CreditCard';
 export { default as Hamburger } from './Hamburger';
 export { default as LogOut } from './LogOut';
 export { default as RemoveIcon } from './RemoveIcon';

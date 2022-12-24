@@ -3,24 +3,47 @@ import {
   Button,
   Card,
   CardContent,
+  Chip,
   Divider,
   Grid,
   Link,
+  TextField,
   Typography,
 } from '@mui/material';
 import Cookies from 'js-cookie';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { MainLayout } from '@/layouts';
-import { CartContext, StoreContext } from '@/stateManagement/context';
+import {
+  AuthContext,
+  CartContext,
+  StoreContext,
+} from '@/stateManagement/context';
 import { Loading } from '@/ui';
-import { CartList, OrderSummary } from '@/views/store';
+import { CartList } from '@/views/store';
+import { paymentResolver } from '@/views/store/validators/paymentValidator';
+import { useForm } from 'react-hook-form';
+
+interface IPayment {
+  cardNumber: string;
+  cvv: string;
+}
 
 const SummaryPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid, isDirty, errors },
+  } = useForm<IPayment>({
+    mode: 'onChange',
+    resolver: paymentResolver,
+  });
+
   const router = useRouter();
   const {
+    createOrder,
     shippingAddress,
     orderSummary: { numberOfItems },
   } = useContext(CartContext);
@@ -28,6 +51,11 @@ const SummaryPage = () => {
   const {
     query: { storeId },
   } = router;
+  const { user } = useContext(AuthContext);
+
+  const [isPosting, setIsPosting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showPayment, setShowPayment] = useState(false);
 
   useEffect(() => {
     if (!Cookies.get('firstName')) {
@@ -35,9 +63,23 @@ const SummaryPage = () => {
     }
   }, [router]);
 
+  const onCreateOrder = async () => {
+    setIsPosting(true);
+    const { hasError, message } = await createOrder(
+      store?.store_data.id || Number(storeId),
+      user?.user_id || ''
+    );
+    if (hasError) {
+      setIsPosting(false);
+      setErrorMessage(message);
+      return;
+    }
+    router.replace(`/store/${storeId || store?.store_data.id}/orders/history`);
+  };
+
   if (!shippingAddress) {
     return (
-      <MainLayout title="Noctishop" pageDescription="Cargando">
+      <MainLayout title="Cargando" pageDescription="Cargando">
         <Loading />
       </MainLayout>
     );
@@ -47,7 +89,10 @@ const SummaryPage = () => {
     shippingAddress;
 
   return (
-    <MainLayout title="Order Summary" pageDescription="Order Summary">
+    <MainLayout
+      title="Resumen de la orden"
+      pageDescription="Resumen de la orden"
+    >
       <Typography variant="h1" component="h1" marginY={2}>
         Resumen de la orden
       </Typography>
@@ -89,26 +134,64 @@ const SummaryPage = () => {
               <Typography>{phone}</Typography>
 
               <Divider sx={{ my: 1 }} />
+              {!showPayment && (
+                <Box sx={{ mt: 3 }} display="flex" flexDirection="column">
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    className="circular-btn"
+                    fullWidth
+                    onClick={() => setShowPayment(true)}
+                    disabled={isPosting}
+                  >
+                    Pagar
+                  </Button>
+                  <Chip
+                    color="error"
+                    label={errorMessage}
+                    sx={{ display: errorMessage ? 'flex' : 'none', mt: 2 }}
+                  />
+                </Box>
+              )}
 
-              <Box display="flex" justifyContent="end">
-                <NextLink
-                  href={`/store/${storeId || store?.store_data.id}/cart`}
-                  passHref
-                >
-                  <Link underline="always">Editar</Link>
-                </NextLink>
-              </Box>
-              <OrderSummary />
-              <Box sx={{ mt: 3 }}>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  className="circular-btn"
-                  fullWidth
-                >
-                  Confirmar orden
-                </Button>
-              </Box>
+              {showPayment && (
+                <Box sx={{ mt: 5 }} display="flex" flexDirection="column">
+                  <form onSubmit={handleSubmit(onCreateOrder)}>
+                    <TextField
+                      sx={{ mb: 3 }}
+                      id="credit-card"
+                      label="Tarjeta de crédito"
+                      variant="outlined"
+                      placeholder="XXXX-XXXX-XXXX-XXXX"
+                      fullWidth
+                      error={!!errors.cardNumber}
+                      helperText={errors.cardNumber?.message}
+                      {...register('cardNumber')}
+                    />
+                    <TextField
+                      sx={{ mb: 3 }}
+                      id="cvv"
+                      label="CVV"
+                      variant="outlined"
+                      placeholder="XXX"
+                      fullWidth
+                      error={!!errors.cvv}
+                      helperText={errors.cvv?.message}
+                      {...register('cvv')}
+                    />
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      className="circular-btn"
+                      type="submit"
+                      fullWidth
+                      disabled={!isValid || !isDirty}
+                    >
+                      Confirmar Orden
+                    </Button>
+                  </form>
+                </Box>
+              )}
             </CardContent>
           </Card>
         </Grid>

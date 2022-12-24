@@ -35,12 +35,12 @@ export const SideMenu = () => {
     >
       <Box sx={{ width: 250, paddingTop: 5 }}>
         <List>
-          <ListItemButton>
-            <ListItemText primary={'Mi Perfil'} />
-          </ListItemButton>
-
-          <ListItemButton>
-            <ListItemText primary={'Mis Pedidos'} />
+          <ListItemButton
+            onClick={() =>
+              navigateTo(`/store/${store?.store_data.id}/orders/history`)
+            }
+          >
+            <ListItemText primary={'Mis Órdenes'} />
           </ListItemButton>
 
           <ListItemButton onClick={() => navigateTo('/')}>
@@ -59,10 +59,6 @@ export const SideMenu = () => {
           >
             <ListItemText primary={'Inicio'} />
           </ListItemButton>
-
-          {/* <ListItemButton sx={{ display: { xs: '', sm: 'none' } }}>
-            <ListItemText primary={'Productos'} />
-          </ListItemButton> */}
 
           <ListItemButton sx={{ display: { xs: '', sm: 'none' } }}>
             <ListItemText primary={'Servicios'} />

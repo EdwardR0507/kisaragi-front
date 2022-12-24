@@ -18,9 +18,10 @@ import { currencyFormat } from '../../utils';
 
 interface CartListProps {
   editable?: boolean;
+  products?: ICartProduct[];
 }
 
-export const CartList: FC<CartListProps> = ({ editable = false }) => {
+export const CartList: FC<CartListProps> = ({ editable = false, products }) => {
   const {
     query: { storeId },
   } = useRouter();
@@ -33,9 +34,11 @@ export const CartList: FC<CartListProps> = ({ editable = false }) => {
     updateCartQuantity(product);
   };
 
+  const productsToShow = products ? products : cart;
+
   return (
     <>
-      {cart.map((product: ICartProduct) => (
+      {productsToShow.map((product: ICartProduct) => (
         <Grid container spacing={3} key={product.id + product.name}>
           <Grid item xs={3}>
             <NextLink

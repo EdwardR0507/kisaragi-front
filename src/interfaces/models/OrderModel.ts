@@ -1,4 +1,4 @@
-import { IUser } from './';
+import { ICartProduct, IUser } from './';
 
 export interface IShippingAddress {
   firstName: string;
@@ -10,31 +10,39 @@ export interface IShippingAddress {
 }
 
 export interface IOrder {
-  _id?: string;
-  user?: IUser | string; // user or user id
-  orderItems: IOrderItem[];
+  tracking: string;
+  user?: IUser | string;
+  orderItems: ICartProduct[];
   shippingAddress: IShippingAddress;
-  paymentResult?: string;
-
   numberOfItems: number;
   subTotal: number;
   tax: number;
   total: number;
-
   isPaid: boolean;
-  paidAt?: string;
-
-  transactionId?: string;
-
-  createdAt?: string;
-  updatedAt?: string;
 }
 
-export interface IOrderItem {
-  _id: string;
-  title: string;
+export interface IOrderResponse {
+  order_id: number;
+  tracking: string;
+  store_name: string;
+  products: IProductCreate[];
+  total: number;
+  address: string;
+  state: string;
+  userId: string;
+}
+
+interface IProductCreate {
+  idProduct: number;
   quantity: number;
-  slug: string;
-  image: string;
-  price: number;
+  product_name?: string;
+}
+
+export interface IOrderCreate {
+  products: IProductCreate[];
+  address: string;
+  tracking: string;
+  storeId: number;
+  userId: string;
+  total: number;
 }

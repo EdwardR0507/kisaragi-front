@@ -3,12 +3,23 @@ import { Grid, Typography } from '@mui/material';
 import { FC, useContext } from 'react';
 import { currencyFormat } from '../../utils';
 
-interface OrderSummaryProps {}
+interface OrderSummaryProps {
+  orderValues?: {
+    numberOfItems: number;
+    subTotal: number;
+    total: number;
+    tax: number;
+  };
+}
 
-export const OrderSummary: FC<OrderSummaryProps> = () => {
+export const OrderSummary: FC<OrderSummaryProps> = ({ orderValues }) => {
   const {
     orderSummary: { numberOfItems, subTotal, total, tax },
   } = useContext(CartContext);
+
+  const summaryValues = orderValues
+    ? orderValues
+    : { numberOfItems, subTotal, total, tax };
 
   return (
     <Grid container>
@@ -17,14 +28,15 @@ export const OrderSummary: FC<OrderSummaryProps> = () => {
       </Grid>
       <Grid item xs={6} display="flex" justifyContent="end">
         <Typography>
-          {numberOfItems} {numberOfItems > 1 ? 'productos' : 'producto'}
+          {summaryValues.numberOfItems}{' '}
+          {summaryValues.numberOfItems > 1 ? 'productos' : 'producto'}
         </Typography>
       </Grid>
       <Grid item xs={6}>
         <Typography>SubTotal</Typography>
       </Grid>
       <Grid item xs={6} display="flex" justifyContent="end">
-        <Typography>{currencyFormat(subTotal)}</Typography>
+        <Typography>{currencyFormat(summaryValues.subTotal)}</Typography>
       </Grid>
       <Grid item xs={6}>
         <Typography>
@@ -32,13 +44,13 @@ export const OrderSummary: FC<OrderSummaryProps> = () => {
         </Typography>
       </Grid>
       <Grid item xs={6} display="flex" justifyContent="end">
-        <Typography>{currencyFormat(tax)}</Typography>
+        <Typography>{currencyFormat(summaryValues.tax)}</Typography>
       </Grid>
       <Grid item xs={6} sx={{ mt: 2 }}>
         <Typography>Monto a pagar: </Typography>
       </Grid>
       <Grid item xs={6} sx={{ mt: 2 }} display="flex" justifyContent="end">
-        <Typography>{currencyFormat(total)}</Typography>
+        <Typography>{currencyFormat(summaryValues.total)}</Typography>
       </Grid>
     </Grid>
   );

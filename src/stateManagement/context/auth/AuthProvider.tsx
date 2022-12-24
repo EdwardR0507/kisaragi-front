@@ -2,6 +2,7 @@ import { signOut, useSession } from 'next-auth/react';
 import React, { FC, useEffect, useReducer } from 'react';
 
 import { IUser } from '@/interfaces/index';
+import Cookies from 'js-cookie';
 import { AuthContext, authReducer } from './';
 
 export interface AuthState {
@@ -27,6 +28,11 @@ export const AuthProvider: FC<AuthProps> = ({ children }) => {
       callbackUrl: `/auth/login`,
       redirect: true,
     });
+    // Delete all cookies
+    const cookies = Cookies.get();
+    for (const name in cookies) {
+      Cookies.remove(name);
+    }
   };
 
   useEffect(() => {
