@@ -12,11 +12,11 @@ Then add the environment variables that appear in the .env.example file:
 
 ```bash
 # Kisaragi Auth Endpoint
-NEXT_PUBLIC_KISARAGI_AUTH=
+NEXT_PUBLIC_KISARAGI_AUTH=https://kisaragi-auth-prod.herokuapp.com/api/v1
 # Kisaragi Core Endpoint
-NEXT_PUBLIC_KISARAGI_CORE=
+NEXT_PUBLIC_KISARAGI_CORE=https://kisaragi-core.herokuapp.com/
 # Tax Rate
-NEXT_PUBLIC_TAX_RATE=
+NEXT_PUBLIC_TAX_RATE=0.15
 # Secret for signing token
 NEXTAUTH_SECRET=
 ```
